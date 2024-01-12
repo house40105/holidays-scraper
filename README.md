@@ -54,5 +54,16 @@ go get -u github.com/gocolly/colly/v2
 ```
 ### Execution Results
 After running the Holidays_Scraper.go program, you can expect the following results:  
-**Console Output**
+
+**Console Output**  
 The program provides console output to keep you informed about its progress. The console output includes details such as visited URLs, errors, and other relevant information. Below is an example of what you might see in the console:  
+![Console_Output](https://github.com/house40105/holidays-scraper/blob/main/fig/Console_Output.png)
+
+**CSV Output**  
+The program generates a CSV file containing the scraped holiday data. The CSV file is named based on the `optputFileName` variable. Here is an example of how the CSV file's content might look:  
+```plaintext
+Day       Date       Holiday Name              Holiday Type      Is Holiday    Comments
+Friday    2024-01-01 New Year's Day            Public Holiday    true          Celebrating the beginning of the new year
+Monday    2024-02-12 Chinese New Year          Public Holiday    true          Celebrating the Chinese New Year
+...
+```
