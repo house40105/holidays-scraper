@@ -6,7 +6,7 @@ This Go application is designed to scrape and collect holiday data from the [Off
 - [Usage](#Usage)
 - [Configuration](#Configuration)
 - [Dependencies](#Dependencies)
-- [Execution Results](#Execution Results)
+- [Execution Results](#ExecutionResults)
 
 ### Introduction
 The Holidays Scraper stands as a command-line application meticulously developed in the Go programming language, purposefully designed to automate the extraction of holiday-related information from the OfficeHolidays website. This adept tool strategically utilizes the [Colly](https://github.com/gocolly/colly) library for proficient web scraping, augmenting its capabilities with features including the adept management of compensatory holidays and the incorporation of extended weekends.  
