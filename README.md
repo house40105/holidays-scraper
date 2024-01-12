@@ -11,20 +11,13 @@ This Go application is designed to scrape and collect holiday data from the [Off
 The Holidays Scraper stands as a command-line application meticulously developed in the Go programming language, purposefully designed to automate the extraction of holiday-related information from the OfficeHolidays website. This adept tool strategically utilizes the [Colly](https://github.com/gocolly/colly) library for proficient web scraping, augmenting its capabilities with features including the adept management of compensatory holidays and the incorporation of extended weekends.  
 
 ### Features
-- **Web Scraping:**  
-   Utilizes the Colly library to navigate through the OfficeHolidays website and extract holiday data.
-- **User-Agent Simulation:**  
-  The program simulates a real user by setting a random User-Agent header for each HTTP request.
-- **Error Handling:**  
-  Comprehensive error handling is implemented to log errors and continue processing other years in case of any issues.
-- **Date Parsing:**  
-  The program parses date strings from the website and converts them into a consistent format.
-- **Compensatory Holidays:**  
-   The program detects compensatory holidays embedded in the comments and seamlessly integrates them into the final output. It performs this task with precision, identifying and incorporating compensatory holidays according to specific criteria defined within the system
-- **Extended Weekends:**  
-   Adds entries for extended weekends (Saturday and Sunday) around public holidays falling on Fridays or Mondays.
-- **CSV Output:**  
-   Generates a CSV file with comprehensive holiday details including day, date, holiday name, type, and additional comments.
+- **Web Scraping:** Utilizes the Colly library to navigate through the OfficeHolidays website and extract holiday data.
+- **User-Agent Simulation:**  The program simulates a real user by setting a random User-Agent header for each HTTP request.
+- **Error Handling:**  Comprehensive error handling is implemented to log errors and continue processing other years in case of any issues.
+- **Date Parsing:**  The program parses date strings from the website and converts them into a consistent format.
+- **Compensatory Holidays:**  The program detects compensatory holidays embedded in the comments and seamlessly integrates them into the final output. It performs this task with precision, identifying and incorporating compensatory holidays according to specific criteria defined within the system
+- **Extended Weekends:**  Adds entries for extended weekends (Saturday and Sunday) around public holidays falling on Fridays or Mondays.
+- **CSV Output:**  Generates a CSV file with comprehensive holiday details including day, date, holiday name, type, and additional comments.
 
 ### Usage
 To use the Holidays Scraper, follow these steps:
