@@ -46,7 +46,7 @@ func main() {
 
 		// Creating a new Collector instance
 		// Setting a custom User-Agent header to mimic a common web browser (Chrome on Windows)
-		c := colly.NewCollector(colly.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"))
+		c := colly.NewCollector()
 
 		c.OnRequest(setUserAgent)
 
