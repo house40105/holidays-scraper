@@ -44,13 +44,14 @@ To use the Holidays Scraper, follow these steps:
 
 ### Configuration
 The application is configured with the following variables:
-- `baseURL`: The base URL for the OfficeHolidays website.
-- `country`: The target country for which holiday data is retrieved.
-- `optputFileName`: The output filename for the generated CSV file.
-- `yearsList`: The list of years for which holiday data is collected.
-- `targetDateFormat`: The desired date format for the output.
-- `logFormat`: The format for log messages.
-These variables can be adjusted in the Holidays_Scraper.go file to customize the scraping behavior.
+- `baseURL`: The base URL for the OfficeHolidays website.  
+- `country`: The target country for which holiday data is retrieved.Update this variable with the desired country code.  
+- `optputFileName`: The output filename for the generated CSV file.Modify this variable to set the name of the CSV file that will store the holiday data.  
+- `yearsList`: The list of years for which holiday data is collected.Add or remove years in this list to specify the range of years for which you want to scrape holiday information.  
+- `targetDateFormat`: The desired date format for the output.Adjust this variable to set the format in which the dates will be represented in the generated CSV file.  
+- `logFormat`: The format for log messages.  
+  
+These variables provide flexibility, allowing you to tailor the scraping behavior according to your specific requirements. Update them as needed to achieve the desired configuration for the Holidays Scraper.
 
 ### Dependencies
 The Holidays Scraper relies on the Colly library for web scraping. Ensure that this library is installed using the following command:
