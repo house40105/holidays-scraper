@@ -17,9 +17,9 @@ import (
 var baseURL = "https://www.officeholidays.com/countries/"
 var country = "taiwan"
 var optputFileName = "holiday"
-var yearsList = []string{"2000", "2023", "2024", "2025", "2026", "2012"}
+var yearsList = []string{"2022", "2023", "2024", "2025", "2026", "2021"}
 
-var targetDateFormat = "2006-01-02"
+var targetDateFormat = "20060102"
 var logFormat = "%-8s%s"
 
 // Holiday struct to represent each holiday entry
@@ -81,13 +81,13 @@ func main() {
 		}
 
 		tmpHolidays := addCompensatedHolidays(holidays, year)
-		tmpHolidays = addExtendedDays(tmpHolidays)
-		finalHolidays := sortTableByDate(tmpHolidays)
+		finalHolidays := addExtendedDays(tmpHolidays)
 
 		allHolidays = append(allHolidays, finalHolidays...)
 	}
 
 	// printTable(allHolidays)
+	allHolidays = sortTableByDate(allHolidays)
 
 	err := writeCSV(allHolidays)
 	if err != nil {
@@ -128,8 +128,8 @@ func parseToHoliday(e *colly.HTMLElement) Holiday {
 	// Formatting date to the desired output format ("20240101")
 	outDateFormat := tmpDate.Format(targetDateFormat)
 
-	// Checking if it's a public holiday
-	isHoliday := !strings.Contains(holidayType, "Not A Public Holiday")
+	// Checking if it's a public holiday or weekend
+	isHoliday := (!strings.Contains(holidayType, "Not A Public Holiday") || strings.Contains(day, "Saturday") || strings.Contains(day, "Sunday"))
 
 	return Holiday{
 		Day:         day,
@@ -284,6 +284,9 @@ func convertToDate(dateStr string) (time.Time, error) {
 
 	// Define a list of date formats to attempt parsing
 	dateFormats := []string{"Mon. Jan 2 2006", "Mon. January 2 2006", "Mon. Jan. 2 2006"}
+
+	// Exceptionally format. Check if dateStr contains "Sept." and replace it with "Sep."
+	dateStr = strings.Replace(dateStr, "Sept.", "Sep.", -1)
 
 	// Iterate over each date format and attempt to parse the date string
 	for _, format := range dateFormats {
