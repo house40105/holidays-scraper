@@ -55,7 +55,7 @@ func main() {
 		// Applying rate limiting to the Collector to avoid making requests too quickly
 		c.Limit(&colly.LimitRule{
 			DomainGlob: "*",
-			// RandomDelay: 2 * time.Second,
+			RandomDelay: 2 * time.Second,
 		})
 
 		c.OnResponse(func(r *colly.Response) {
