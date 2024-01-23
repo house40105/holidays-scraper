@@ -17,7 +17,8 @@ import (
 var baseURL = "https://www.officeholidays.com/countries/"
 var country = "taiwan"
 var optputFileName = "holiday"
-var yearsList = []string{"2022", "2023", "2024", "2025", "2026", "2021"}
+
+// var yearsList = []string{"2022", "2023", "2024", "2025", "2020", "2021"}
 
 var targetDateFormat = "20060102"
 var logFormat = "%-8s%s"
@@ -35,6 +36,7 @@ type Holiday struct {
 func main() {
 
 	var allHolidays []Holiday
+	yearsList := getYearsList(time.Now().Year(), 5, 1)
 
 	for _, year := range yearsList {
 
@@ -52,8 +54,8 @@ func main() {
 
 		// Applying rate limiting to the Collector to avoid making requests too quickly
 		c.Limit(&colly.LimitRule{
-			DomainGlob:  "*",
-			RandomDelay: 2 * time.Second,
+			DomainGlob: "*",
+			// RandomDelay: 2 * time.Second,
 		})
 
 		c.OnResponse(func(r *colly.Response) {
@@ -80,13 +82,12 @@ func main() {
 			continue
 		}
 
-		tmpHolidays := addCompensatedHolidays(holidays, year)
-		finalHolidays := addExtendedDays(tmpHolidays)
-
+		finalHolidays := addCompensatedHolidays(holidays, year)
 		allHolidays = append(allHolidays, finalHolidays...)
 	}
 
 	// printTable(allHolidays)
+	allHolidays = addExtendedDays(allHolidays)
 	allHolidays = sortTableByDate(allHolidays)
 
 	err := writeCSV(allHolidays)
@@ -94,6 +95,20 @@ func main() {
 		log.Printf(logFormat, "[ERROR]", fmt.Sprintf("Write CSV: %s", err))
 	}
 
+}
+
+// getYearsList generates a list of years, including the current year and a specified number of preceding and following years.
+func getYearsList(currentYear, preYears int, follYears int) []string {
+	totalYearsRange := preYears + follYears + 1
+	currentYear = currentYear - preYears
+	yearsList := make([]string, totalYearsRange)
+
+	for i := 0; i < totalYearsRange; i++ {
+		yearsList[i] = fmt.Sprint(currentYear + i)
+	}
+
+	log.Printf(logFormat, "[INFO]", fmt.Sprintf("Set List of Years: %s", yearsList))
+	return yearsList
 }
 
 // setUserAgent sets random custom headers to simulate a real user
@@ -170,7 +185,7 @@ func writeCSV(holidays []Holiday) error {
 	header := []string{"Day", "Date", "Holiday Name", "Holiday Type", "Is Holiday", "Comments"}
 	err = writer.Write(header)
 	if err != nil {
-		log.Printf(logFormat, "[ERROR]", fmt.Sprintf("Write CSV Header:  %s", err))
+		log.Printf(logFormat, "[ERROR]", fmt.Sprintf("Write CSV Header: %s", err))
 	}
 
 	// Writing data
@@ -178,7 +193,7 @@ func writeCSV(holidays []Holiday) error {
 		row := []string{h.Day, h.Date, h.HolidayName, h.HolidayType, boolToString(h.IsHoliday), h.Comments}
 		err := writer.Write(row)
 		if err != nil {
-			log.Printf(logFormat, "[ERROR]", fmt.Sprintf("Writing Data:  %s", err))
+			log.Printf(logFormat, "[ERROR]", fmt.Sprintf("Writing Data: %s", err))
 		}
 	}
 
@@ -283,7 +298,7 @@ func convertToDate(dateStr string) (time.Time, error) {
 	var err error
 
 	// Define a list of date formats to attempt parsing
-	dateFormats := []string{"Mon. Jan 2 2006", "Mon. January 2 2006", "Mon. Jan. 2 2006"}
+	dateFormats := []string{"Mon. Jan 2 2006", "Mon. January 2 2006", "Mon. Jan. 2 2006", "Monday. January 2 2006", "Monday. Jan 2 2006", "Monday. Jan. 2 2006", "Monday. 2th January 2006"}
 
 	// Exceptionally format. Check if dateStr contains "Sept." and replace it with "Sep."
 	dateStr = strings.Replace(dateStr, "Sept.", "Sep.", -1)
